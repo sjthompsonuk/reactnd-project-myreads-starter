@@ -7,7 +7,7 @@ import Bookshelf from './Bookshelf'
 class App extends React.Component {
 
   state = {
-    books:[]
+    books: []
   }
 
   updateBooks = () => {
@@ -17,9 +17,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    BooksAPI.getAll().then((books) =>{
-      this.setState({books:books})
-    })
+    this.updateBooks()
   }
 
   render() {
@@ -53,15 +51,16 @@ class App extends React.Component {
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
+            <div>{this.props.books}</div>
             <div className="list-books-content">
               <div>
                 {/*TODO try to use super in the Bookshelf.js file to prevent passing props down*/}
                 {/*Shelf removed*/}
-                <Bookshelf books={this.props.books} category="currentlyReading" updateBooks={this.props.updateBooks}/>
+                <Bookshelf books={this.state.books} category="currentlyReading" updateBooks={this.updateBooks}/>
                 {/*Shelf removed*/}
-                <Bookshelf books={this.props.books} category="wantToRead" updateBooks={this.props.updateBooks}/>
+                <Bookshelf books={this.state.books} category="wantToRead" updateBooks={this.updateBooks}/>
                 {/*Shelf removed*/}
-                <Bookshelf books={this.props.books} category="read" updateBooks={this.props.updateBooks}/>
+                <Bookshelf books={this.state.books} category="read" updateBooks={this.updateBooks}/>
               </div>
             </div>
 
