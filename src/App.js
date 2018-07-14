@@ -12,7 +12,7 @@ class App extends React.Component {
 
   updateBooks = () => {
     BooksAPI.getAll().then((books) =>{
-      this.setState({books})
+      this.setState({books:books})
     })
   }
 
@@ -46,6 +46,8 @@ class App extends React.Component {
           </div>
         ) :
 
+        // MAIN SECTION
+
         (
           <div className="list-books">
             <div className="list-books-title">
@@ -53,12 +55,13 @@ class App extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
+                {/*TODO try to use super in the Bookshelf.js file to prevent passing props down*/}
                 {/*Shelf removed*/}
-                <Bookshelf/>
+                <Bookshelf books={this.props.books} category="currentlyReading" updateBooks={this.props.updateBooks}/>
                 {/*Shelf removed*/}
-                <Bookshelf/>
+                <Bookshelf books={this.props.books} category="wantToRead" updateBooks={this.props.updateBooks}/>
                 {/*Shelf removed*/}
-                <Bookshelf/>
+                <Bookshelf books={this.props.books} category="read" updateBooks={this.props.updateBooks}/>
               </div>
             </div>
 
