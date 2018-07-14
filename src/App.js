@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //Need to add react routing later TODO
 import * as BooksAPI from "./BooksAPI"
 import './App.css'
-import Book from './Book'
+import Bookshelf from './Bookshelf'
 
 class App extends React.Component {
   state = {
@@ -40,39 +40,12 @@ class App extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                        {/* Book removed */}
-                      <Book/>
-                    </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Want to Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {/* Book removed */}
-                      <Book/>
-                      {/* Book removed */}
-                      <Book/>
-                    </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {/* Book removed */}
-                      <Book/>
-                      {/* Book removed */}
-                      <Book/>
-                      {/* Book removed */}
-                      <Book/>
-                    </ol>
-                  </div>
-                </div>
+                {/*Shelf removed*/}
+                <Bookshelf/>
+                {/*Shelf removed*/}
+                <Bookshelf/>
+                {/*Shelf removed*/}
+                <Bookshelf/>
               </div>
             </div>
             <div className="open-search">
