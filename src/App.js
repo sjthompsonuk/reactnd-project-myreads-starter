@@ -56,11 +56,11 @@ class App extends React.Component {
               <div>
                 {/*TODO try to use super in the Bookshelf.js file to prevent passing props down*/}
                 {/*Shelf removed*/}
-                <Bookshelf books={this.state.books} category="currentlyReading" updateBooks={this.updateBooks}/>
+                <Bookshelf books={this.state.books} category="currentlyReading" catTitle="Currently Reading" updateBooks={this.updateBooks}/>
                 {/*Shelf removed*/}
-                <Bookshelf books={this.state.books} category="wantToRead" updateBooks={this.updateBooks}/>
+                <Bookshelf books={this.state.books} category="wantToRead" catTitle="Want to Read" updateBooks={this.updateBooks}/>
                 {/*Shelf removed*/}
-                <Bookshelf books={this.state.books} category="read" updateBooks={this.updateBooks}/>
+                <Bookshelf books={this.state.books} category="read" catTitle="Read" updateBooks={this.updateBooks}/>
               </div>
             </div>
 
