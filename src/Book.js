@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
+import * as BooksAPI from "./BooksAPI"
 
 //Basic Book Component - trying to get actual books from API
 class Book extends React.Component {
+
+  state = {
+    category: ''
+  }
+
+  componentDidMount(){
+    this.setState({category:this.props.book.shelf})
+  }
 
   render() {
     return (
@@ -11,7 +20,10 @@ class Book extends React.Component {
               <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.props.book.imageLinks.thumbnail}")` }}></div>
               {/*TODO Need to arrange the category selector*/}
               <div className="book-shelf-changer">
-                <select>
+              <select value={this.state.category} onChange={(evt)=> {
+                BooksAPI.update(this.props.book, evt.target.value).then(() => this.props.updateBooks())
+                this.setState({shelf:evt.target.value})
+              }}>
                   <option value="move" disabled>Move to...</option>
                   <option value="currentlyReading">Currently Reading</option>
                   <option value="wantToRead">Want to Read</option>
