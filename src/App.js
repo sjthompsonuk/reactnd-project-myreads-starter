@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import * as BooksAPI from "./BooksAPI"
 import './App.css'
 import Bookshelf from './Bookshelf'
-import BookSearch from './BookSearch'
+import Search from './Search'
 import AllShelves from './AllShelves'
 
 class App extends React.Component {
@@ -32,7 +32,7 @@ class App extends React.Component {
             />
           )}/>
           <Route path='/search' render={() => (
-            <BookSearch
+            <Search
               updateBooks={this.updateBooks}
             />
           )}/>
