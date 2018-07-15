@@ -5,7 +5,7 @@ import * as BooksAPI from "./BooksAPI"
 class Book extends React.Component {
 
   state = {
-    category: ''
+    category: 'none'
   }
 
   componentDidMount(){
@@ -18,7 +18,6 @@ class Book extends React.Component {
           <div className="book">
             <div className="book-top">
               <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.props.book.imageLinks.thumbnail}")` }}></div>
-              {/*TODO Need to arrange the category selector*/}
               <div className="book-shelf-changer">
               <select value={this.state.category} onChange={(evt)=> {
                 BooksAPI.update(this.props.book, evt.target.value).then(() => this.props.updateBooks())
