@@ -16,7 +16,8 @@ class App extends React.Component {
   updateBooks = () => {
     BooksAPI.getAll().then((books) =>{
       this.setState({books:books})
-    })
+      console.log(books)
+  }).catch(console.log('Unable to get all Books from API'))
   }
 
   componentDidMount() {
@@ -28,13 +29,10 @@ class App extends React.Component {
       <div className="app">
           <Route exact path='/' render={() => (
             <AllShelves
-              books={this.state.books} updateBooks={this.updateBooks}
-            />
+              books={this.state.books} updateBooks={this.updateBooks}/>
           )}/>
           <Route path='/search' render={() => (
-            <Search
-              updateBooks={this.updateBooks}
-            />
+            <Search books={this.state.books} updateBooks={this.updateBooks}/>
           )}/>
       </div>
     )

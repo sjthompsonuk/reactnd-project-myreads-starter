@@ -7,7 +7,6 @@ import Book from './Book'
 
 class Search extends Component{
   state = {
-    books:[],
     results:[],
     query:'',
   }
@@ -16,18 +15,35 @@ class Search extends Component{
     const match = new RegExp(escapeRegExp(evt.target.value),'i')
     if(match.test(evt.target.value)) {
       this.setState({query:evt.target.value})
-      BooksAPI.search(evt.target.value).then(queryResults => {
-        this.setState({results:queryResults})
-      })
+      BooksAPI.search(this.state.query).then(queryResults => {
+
+          {/* Ensure a valid set of results has been returned */}
+          if (Array.isArray(queryResults)) {
+            this.setState({results:queryResults})
+
+            {/* Change results that match our library to have the relevant category */}
+            let resultsCopy = JSON.parse(JSON.stringify(this.state.results))
+            //Loop through results v books in library
+            for (let result in this.state.results) {
+                for (let book in this.props.books) {
+                    if (this.state.results[result].id === this.props.books[book].id) {
+                       //make changes to bookshelf
+                       resultsCopy[result].shelf = this.props.books[book].shelf
+                    }
+                }
+            }
+            //Assign to state
+            this.setState({results:resultsCopy})
+            console.log(this.state.results)
+          }
+       })
     }
   }
 
   componentDidMount() {
-    BooksAPI.getAll().then(books => {
-      this.setState({books})
-    })
-    this.results = this.state.results
+    this.props.updateBooks()
   }
+
   render() {
 
     return(
@@ -46,7 +62,9 @@ class Search extends Component{
           <ol className="books-grid">
             {this.state.results.map(result => (
               <Book key={result.id} book={result} updateBooks={this.props.updateBooks} />
-            ))}
+            ))
+
+            }
           </ol>
         </div>
       </div>)
