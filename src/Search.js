@@ -14,35 +14,47 @@ class Search extends Component{
   bookSearch = (evt) => {
     const match = new RegExp(escapeRegExp(evt.target.value),'i')
     if(match.test(evt.target.value)) {
+
       this.setState({query:evt.target.value})
 
       if (evt.target.value === '') {
-          console.log('empty query')
           this.setState({results:[]})
       } else {
           BooksAPI.search(this.state.query).then(queryResults => {
+              // Check the API has returned something
+              if (queryResults !== undefined) {
+                  // Reset on bad search string
+                  if (queryResults.error && (queryResults.error = "empty query")) {
+                      this.setState({results:[]})
+                  } else if (queryResults.error) {
+                      console.log('non empty query API return error')
+                      console.log(queryResults)
+                      alert('Sorry something went wrong, please try again later')
+                  } else {
+                      //Ensure a non-error Array set of results has been returned
+                      if (Array.isArray(queryResults)) {
 
-              {/* Ensure a valid set of results has been returned */}
-              if (Array.isArray(queryResults)) {
+                            // Change results that match our library to have the relevant category
+                            let resultsCopy = JSON.parse(JSON.stringify(queryResults))
+                            //Loop through results v books in library
+                            for (let result in resultsCopy) {
+                                for (let book in this.props.books) {
+                                    if (resultsCopy[result].id === this.props.books[book].id) {
+                                       //make changes to bookshelf
+                                       resultsCopy[result].shelf = this.props.books[book].shelf
+                                    }
+                                }
+                            }
+                            //Assign to state
+                            this.setState({results:resultsCopy})
 
-                {/* Change results that match our library to have the relevant category */}
-                let resultsCopy = JSON.parse(JSON.stringify(queryResults))
-                //Loop through results v books in library
-                for (let result in resultsCopy) {
-                    for (let book in this.props.books) {
-                        if (resultsCopy[result].id === this.props.books[book].id) {
-                           //make changes to bookshelf
-                           resultsCopy[result].shelf = this.props.books[book].shelf
-                        }
-                    }
-                }
-                //Assign to state
-                this.setState({results:resultsCopy})
-                console.log(this.state.results)
+                      }
+                  }
               }
-           })
-       }
 
+
+          })
+      }
     }
   }
 
@@ -60,7 +72,7 @@ class Search extends Component{
           {/*
             NOTES: Need to refer to SearchTerms.md
           */}
-          <input type="text" placeholder="Search by title or author" onChange={this.bookSearch}/>
+          <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={this.bookSearch}/>
 
         </div>
       </div>
