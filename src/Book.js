@@ -21,8 +21,10 @@ class Book extends React.Component {
               <div className="book-shelf-changer">
               <select value={this.state.category} onChange={(evt)=> {
                 console.log('change')
-                BooksAPI.update(this.props.book.id, evt.target.value).then((resp) =>
-                console.log(resp))
+                BooksAPI.update(this.props.book, evt.target.value).then((resp) =>
+                  this.props.updateBooks()
+                )
+                this.setState({category:evt.target.value})
               }}>
                   <option value="move" disabled>Move to...</option>
                   <option value="currentlyReading">Currently Reading</option>
