@@ -19,14 +19,13 @@ class Search extends Component{
 
           {/* Ensure a valid set of results has been returned */}
           if (Array.isArray(queryResults)) {
-            this.setState({results:queryResults})
 
             {/* Change results that match our library to have the relevant category */}
-            let resultsCopy = JSON.parse(JSON.stringify(this.state.results))
+            let resultsCopy = JSON.parse(JSON.stringify(queryResults))
             //Loop through results v books in library
-            for (let result in this.state.results) {
+            for (let result in resultsCopy) {
                 for (let book in this.props.books) {
-                    if (this.state.results[result].id === this.props.books[book].id) {
+                    if (resultsCopy[result].id === this.props.books[book].id) {
                        //make changes to bookshelf
                        resultsCopy[result].shelf = this.props.books[book].shelf
                     }
