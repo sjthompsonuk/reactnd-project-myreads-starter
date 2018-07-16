@@ -13,12 +13,11 @@ class Book extends React.Component {
   }
 
   render() {
-    let thumb = "https://books.google.com/googlebooks/images/no_cover_thumb.gif"
     return (
         <li>
           <div className="book">
             <div className="book-top">
-              <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.props.book.imageLinks ? this.props.book.imageLinks.thumbnail : thumb}")` }}></div>
+              <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.props.book.imageLinks ? this.props.book.imageLinks.thumbnail : ''}")` }}></div>
               <div className="book-shelf-changer">
               <select value={this.state.category} onChange={(evt)=> {
                 console.log('change')
