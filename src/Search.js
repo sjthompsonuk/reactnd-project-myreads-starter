@@ -15,27 +15,34 @@ class Search extends Component{
     const match = new RegExp(escapeRegExp(evt.target.value),'i')
     if(match.test(evt.target.value)) {
       this.setState({query:evt.target.value})
-      BooksAPI.search(this.state.query).then(queryResults => {
 
-          {/* Ensure a valid set of results has been returned */}
-          if (Array.isArray(queryResults)) {
+      if (evt.target.value === '') {
+          console.log('empty query')
+          this.setState({results:[]})
+      } else {
+          BooksAPI.search(this.state.query).then(queryResults => {
 
-            {/* Change results that match our library to have the relevant category */}
-            let resultsCopy = JSON.parse(JSON.stringify(queryResults))
-            //Loop through results v books in library
-            for (let result in resultsCopy) {
-                for (let book in this.props.books) {
-                    if (resultsCopy[result].id === this.props.books[book].id) {
-                       //make changes to bookshelf
-                       resultsCopy[result].shelf = this.props.books[book].shelf
+              {/* Ensure a valid set of results has been returned */}
+              if (Array.isArray(queryResults)) {
+
+                {/* Change results that match our library to have the relevant category */}
+                let resultsCopy = JSON.parse(JSON.stringify(queryResults))
+                //Loop through results v books in library
+                for (let result in resultsCopy) {
+                    for (let book in this.props.books) {
+                        if (resultsCopy[result].id === this.props.books[book].id) {
+                           //make changes to bookshelf
+                           resultsCopy[result].shelf = this.props.books[book].shelf
+                        }
                     }
                 }
-            }
-            //Assign to state
-            this.setState({results:resultsCopy})
-            console.log(this.state.results)
-          }
-       })
+                //Assign to state
+                this.setState({results:resultsCopy})
+                console.log(this.state.results)
+              }
+           })
+       }
+
     }
   }
 
